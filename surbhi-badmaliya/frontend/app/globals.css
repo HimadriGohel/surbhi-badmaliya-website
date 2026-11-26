@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* Concept: "Raas under the lights" — midnight indigo stage, plum velvet, fuchsia chaniya,
+   saffron diya glow, ivory paper. Motifs: bandhani dots, abhla (mirror) rings, sound-wave lines. */
+@theme {
+  --color-night: #111111;
+  --color-indigo: #1b1b1b;
+  --color-plum: #3a1414;
+  --color-fuchsia: #d62828;
+  --color-rose: #ff4b4b;
+  --color-saffron: #ff8a7a;
+  --color-ivory: #ffffff;
+  --color-mist: #bdbdbd;
+  --font-display: var(--nf-display), "Bodoni Moda", Georgia, serif;
+  --font-body: var(--nf-body), var(--nf-gu), system-ui, sans-serif;
+  --font-gu: var(--nf-gu), "Noto Sans Gujarati", sans-serif;
+}
+
+:root { color-scheme: dark; }
+
+html { background: var(--color-night); scroll-behavior: smooth; overflow-x: clip; }
+body { overflow-x: clip; }
+body {
+  background: var(--color-night);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html[lang="gu"] body { font-family: var(--font-gu), var(--font-body); }
+html[lang="gu"] .font-display { font-family: var(--font-gu), var(--font-display); font-weight: 700; letter-spacing: 0 !important; }
+
+::selection { background: var(--color-fuchsia); color: var(--color-ivory); }
+
+:focus-visible { outline: 2px solid var(--color-saffron); outline-offset: 3px; border-radius: 4px; }
+
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.bandhani {
+  background-image: radial-gradient(circle, rgba(255,90,80,.35) 1.2px, transparent 1.6px),
+                    radial-gradient(circle, rgba(214,40,40,.25) 1.2px, transparent 1.6px);
+  background-size: 22px 22px; background-position: 0 0, 11px 11px;
+}
+
+.stage-glow {
+  background:
+    radial-gradient(60% 50% at 20% 0%, rgba(214,40,40,.35), transparent 70%),
+    radial-gradient(50% 40% at 90% 10%, rgba(255,90,80,.18), transparent 70%),
+    linear-gradient(180deg, var(--color-indigo), var(--color-night));
+}
+
+.text-outline { -webkit-text-stroke: 1px rgba(251,243,230,.55); color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+@keyframes eq { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+
+/* Light theme: invert the dark design, then re-invert media so photos/videos keep true colours. */
+html[data-theme="light"] { filter: invert(1) hue-rotate(180deg); background: #111; }
+html[data-theme="light"] img,
+html[data-theme="light"] video,
+html[data-theme="light"] iframe,
+html[data-theme="light"] .no-invert { filter: invert(1) hue-rotate(180deg); }
+html { transition: filter .4s ease; }
+/* keep the brand red true-red in light theme */
+html[data-theme="light"] .bg-fuchsia,
+html[data-theme="light"] .text-fuchsia { filter: invert(1) hue-rotate(180deg); }
+html[data-theme="light"] .bg-fuchsia .text-fuchsia,
+html[data-theme="light"] .text-fuchsia .bg-fuchsia,
+html[data-theme="light"] .bg-fuchsia img,
+html[data-theme="light"] .text-fuchsia img { filter: none; }
+
+
+/* 3D scenes (components/Scene3D.tsx) */
+@keyframes spin-y { to { transform: rotateY(360deg); } }
+@keyframes spin-z { to { transform: rotateZ(360deg); } }
+@keyframes ping-3d { 0% { opacity: .8; scale: .6; } 100% { opacity: 0; scale: 1.3; } }
